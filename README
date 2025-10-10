@@ -1,0 +1,24 @@
+# 101472499_COMP3123_Assignment1
+
+## How to Run
+1. Run `npm install`
+2. Run `node server.js`
+
+## Description
+This project was created to provide a simple API for users and employees.  
+All endpoints were tested with **Postman**.
+
+## Note
+- All passwords are stored in cache  
+- JWT implemented and finished as an additional feature after making all the screenshots in Postman
+
+## Test user credentials
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+## Author
+**Viktor Grygoriev**  
+**Student ID:** 101472499  
+**Program:** T177 In-Person
