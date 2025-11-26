@@ -6,7 +6,7 @@ import AddEmployee from './components/AddEmployee';
 import ViewEmployee from './components/ViewEmployee';
 import UpdateEmployee from './components/UpdateEmployee';
 import NavigationBar from './components/NavigationBar';
-
+import './style.css';
 
 function App() {
   const isLoggedIn = !!localStorage.getItem('token');
