@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api/api';
+import '../style.css'; 
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -26,26 +27,30 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input 
-          placeholder="Email or Username" 
-          value={email} 
-          onChange={e => setEmail(e.target.value)} 
+    <div className="container">
+      <h2 className="app-header">Login</h2>
+
+      <form className="form-container" onSubmit={handleSubmit}>
+        <input
+          placeholder="Email or Username"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
         />
 
-        <input 
-          placeholder="Password" 
+        <input
+          placeholder="Password"
           type="password"
-          value={password} 
-          onChange={e => setPassword(e.target.value)} 
+          value={password}
+          onChange={e => setPassword(e.target.value)}
         />
 
-        <button type="submit">Login</button>
+        <button className="btn btn-add" type="submit">
+          Login
+        </button>
       </form>
     </div>
   );
 }
 
 export default Login;
+

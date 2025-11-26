@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import API from '../api/api';
 import EmployeeForm from './EmployeeForm';
+import '../style.css';
 
 function EmployeesList() {
   const [employees, setEmployees] = useState([]);
@@ -28,27 +29,45 @@ function EmployeesList() {
   };
 
   return (
-    <div>
-      <h2>Employees</h2>
-      <button onClick={() => { localStorage.removeItem('token'); window.location='/login'; }}>Logout</button>
+    <div className="container">
 
-      <div>
-        <input 
-          placeholder="Department" 
-          value={search.department} 
-          onChange={e => setSearch({...search, department: e.target.value})} 
+      <h2 className="app-header">Employees</h2>
+
+      {/* Logout Button */}
+      <button
+        className="btn btn-delete"
+        onClick={() => {
+          localStorage.removeItem('token');
+          window.location = '/login';
+        }}
+      >
+        Logout
+      </button>
+
+      {/* Search Fields */}
+      <div className="form-container" style={{ marginTop: '20px' }}>
+        <input
+          placeholder="Department"
+          value={search.department}
+          onChange={e => setSearch({ ...search, department: e.target.value })}
         />
-        <input 
-          placeholder="Position" 
-          value={search.position} 
-          onChange={e => setSearch({...search, position: e.target.value})} 
+        <input
+          placeholder="Position"
+          value={search.position}
+          onChange={e => setSearch({ ...search, position: e.target.value })}
         />
-        <button onClick={fetchEmployees}>Search</button>
+        <button className="btn btn-add" onClick={fetchEmployees}>
+          Search
+        </button>
       </div>
 
-      <EmployeeForm fetchEmployees={fetchEmployees} />
+      {/* Add Employee Form */}
+      <div style={{ marginTop: '20px' }}>
+        <EmployeeForm fetchEmployees={fetchEmployees} />
+      </div>
 
-      <table border="1">
+      {/* Employee Table */}
+      <table className="table" style={{ marginTop: '25px' }}>
         <thead>
           <tr>
             <th>Name</th><th>Email</th><th>Position</th>
@@ -64,19 +83,36 @@ function EmployeesList() {
               <td>{e.department}</td>
               <td>{e.salary}</td>
               <td>{new Date(e.date_of_joining).toLocaleDateString()}</td>
-              <td>{e.photo && <img src={`http://localhost:8081/uploads/${e.photo}`} width="50" alt="" />}</td>
+
               <td>
-                <button onClick={() => handleDelete(e._id)}>Delete</button>
+                {e.photo && (
+                  <img
+                    src={`https://101472499-comp-3123-assignment2-backend.onrender.com/uploads/${e.photo}`}
+                    width="50"
+                    alt=""
+                  />
+                )}
+              </td>
+
+              <td>
+                <button
+                  className="btn btn-delete"
+                  onClick={() => handleDelete(e._id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
     </div>
   );
 }
 
 export default EmployeesList;
+
 
 
 

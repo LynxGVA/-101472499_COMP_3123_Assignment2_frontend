@@ -25,7 +25,13 @@ function ViewEmployee() {
         <p><b>Position:</b> {emp.position}</p>
         <p><b>Department:</b> {emp.department}</p>
 
-        {emp.photo && <img src={`http://localhost:8081/uploads/${emp.photo}`} width="120" alt="profile" />}
+        {emp.photo && (
+          <img 
+            src={`https://101472499-comp-3123-assignment2-backend.onrender.com/uploads/${emp.photo}`}
+            width="120"
+            alt="profile"
+          />
+        )}
 
         <button className="btn btn-update" onClick={() => navigate(`/employees/${id}/update`)}>Update</button>
         <button className="btn btn-delete" onClick={() => navigate('/employees')}>Back</button>
@@ -35,3 +41,4 @@ function ViewEmployee() {
 }
 
 export default ViewEmployee;
+
