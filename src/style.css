@@ -1,0 +1,73 @@
+.app-header {
+  background: #1976d2;
+  padding: 15px;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.container {
+  width: 900px;
+  margin: auto;
+}
+
+.btn {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.btn-view {
+  background: #0288d1;
+  color: white;
+}
+
+.btn-update {
+  background: #f9a825;
+  color: white;
+}
+
+.btn-delete {
+  background: #d32f2f;
+  color: white;
+}
+
+.btn-add {
+  background: #2e7d32;
+  color: white;
+  padding: 8px 16px;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.table th {
+  background: #e3f2fd;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
