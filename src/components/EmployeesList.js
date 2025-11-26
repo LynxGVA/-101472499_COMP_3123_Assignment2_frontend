@@ -1,11 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import API from '../api/api';
-import EmployeeForm from './EmployeeForm';
 import '../style.css';
 
 function EmployeesList() {
   const [employees, setEmployees] = useState([]);
   const [search, setSearch] = useState({ department: '', position: '' });
+  const navigate = useNavigate();
 
   const fetchEmployees = useCallback(async () => {
     try {
@@ -30,50 +31,45 @@ function EmployeesList() {
 
   return (
     <div className="container">
-
-      <h2 className="app-header">Employees</h2>
-
-      {/* Logout Button */}
       <button
         className="btn btn-delete"
-        onClick={() => {
-          localStorage.removeItem('token');
-          window.location = '/login';
-        }}
+        onClick={() => { localStorage.removeItem('token'); navigate('/login'); }}
       >
         Logout
       </button>
 
-      {/* Search Fields */}
-      <div className="form-container" style={{ marginTop: '20px' }}>
-        <input
+      <div>
+        <input 
           placeholder="Department"
           value={search.department}
-          onChange={e => setSearch({ ...search, department: e.target.value })}
+          onChange={e => setSearch({...search, department: e.target.value})}
         />
-        <input
+        <input 
           placeholder="Position"
           value={search.position}
-          onChange={e => setSearch({ ...search, position: e.target.value })}
+          onChange={e => setSearch({...search, position: e.target.value})}
         />
-        <button className="btn btn-add" onClick={fetchEmployees}>
-          Search
-        </button>
+        <button className="btn btn-view" onClick={fetchEmployees}>Search</button>
       </div>
 
-      {/* Add Employee Form */}
-      <div style={{ marginTop: '20px' }}>
-        <EmployeeForm fetchEmployees={fetchEmployees} />
-      </div>
+      <button className="btn btn-add" onClick={() => navigate('/employees/add')}>
+        Add Employee
+      </button>
 
-      {/* Employee Table */}
-      <table className="table" style={{ marginTop: '25px' }}>
+      <table className="table">
         <thead>
           <tr>
-            <th>Name</th><th>Email</th><th>Position</th>
-            <th>Department</th><th>Salary</th><th>Date</th><th>Photo</th><th>Actions</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Position</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>Date</th>
+            <th>Photo</th>
+            <th>Actions</th>
           </tr>
         </thead>
+
         <tbody>
           {employees.map(e => (
             <tr key={e._id}>
@@ -88,13 +84,27 @@ function EmployeesList() {
                 {e.photo && (
                   <img
                     src={`https://101472499-comp-3123-assignment2-backend.onrender.com/uploads/${e.photo}`}
-                    width="50"
+                    width="60"
                     alt=""
                   />
                 )}
               </td>
 
               <td>
+                <button
+                  className="btn btn-view"
+                  onClick={() => navigate(`/employees/${e._id}`)}
+                >
+                  View
+                </button>
+
+                <button
+                  className="btn btn-update"
+                  onClick={() => navigate(`/employees/${e._id}/update`)}
+                >
+                  Update
+                </button>
+
                 <button
                   className="btn btn-delete"
                   onClick={() => handleDelete(e._id)}
@@ -105,13 +115,14 @@ function EmployeesList() {
             </tr>
           ))}
         </tbody>
-      </table>
 
+      </table>
     </div>
   );
 }
 
 export default EmployeesList;
+
 
 
 

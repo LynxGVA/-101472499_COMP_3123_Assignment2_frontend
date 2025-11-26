@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api/api';
-import '../style.css'; 
+import '../style.css';
 
 function Login() {
-  const [email, setEmail] = useState('');
+  const [input, setInput] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -12,45 +12,45 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await API.post('/user/login', { email, password });
+      const res = await API.post('/user/login', { email: input, username: input, password });
 
       if (!res.data.token) {
-        alert("No token returned");
+        alert("Login error: No token in response");
         return;
       }
 
       localStorage.setItem('token', res.data.token);
       navigate('/employees');
     } catch (err) {
+      console.log(err);
       alert(err.response?.data?.message || 'Login failed');
     }
   };
 
   return (
-    <div className="container">
-      <h2 className="app-header">Login</h2>
+    <div>
+      <h2>Login</h2>
 
-      <form className="form-container" onSubmit={handleSubmit}>
-        <input
-          placeholder="Email or Username"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+      <form onSubmit={handleSubmit}>
+        <input 
+          placeholder="Email or Username" 
+          value={input} 
+          onChange={e => setInput(e.target.value)} 
         />
 
-        <input
-          placeholder="Password"
+        <input 
+          placeholder="Password" 
           type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          value={password} 
+          onChange={e => setPassword(e.target.value)} 
         />
 
-        <button className="btn btn-add" type="submit">
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
 }
 
 export default Login;
+
 

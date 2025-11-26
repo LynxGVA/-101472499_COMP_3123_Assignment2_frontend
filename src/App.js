@@ -9,25 +9,38 @@ import NavigationBar from './components/NavigationBar';
 import './style.css';
 
 function App() {
-  const isLoggedIn = !!localStorage.getItem('token');
+  const token = localStorage.getItem('token');
+  const isLoggedIn = !!token;
 
   return (
     <Router>
       {isLoggedIn && <NavigationBar />}
-      
-      <Routes>
-        <Route path="/" element={isLoggedIn ? <Navigate to="/employees" /> : <Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
 
-        <Route path="/employees" element={isLoggedIn ? <EmployeesList /> : <Navigate to="/login" />} />
-        <Route path="/employees/add" element={isLoggedIn ? <AddEmployee /> : <Navigate to="/login" />} />
-        <Route path="/employees/:id" element={isLoggedIn ? <ViewEmployee /> : <Navigate to="/login" />} />
-        <Route path="/employees/:id/update" element={isLoggedIn ? <UpdateEmployee /> : <Navigate to="/login" />} />
+      <Routes>
+        <Route path="/" element={ isLoggedIn ? <Navigate to="/employees" /> : <Login /> } />
+        <Route path="/login" element={ isLoggedIn ? <Navigate to="/employees" /> : <Login /> } />
+        <Route path="/signup" element={ isLoggedIn ? <Navigate to="/employees" /> : <Signup /> } />
+
+        <Route path="/employees" element={ 
+          isLoggedIn ? <EmployeesList /> : <Navigate to="/login" /> 
+        } />
+
+        <Route path="/employees/add" element={
+          isLoggedIn ? <AddEmployee /> : <Navigate to="/login" />
+        } />
+
+        <Route path="/employees/:id" element={
+          isLoggedIn ? <ViewEmployee /> : <Navigate to="/login" />
+        } />
+
+        <Route path="/employees/:id/update" element={
+          isLoggedIn ? <UpdateEmployee /> : <Navigate to="/login" />
+        } />
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
 
