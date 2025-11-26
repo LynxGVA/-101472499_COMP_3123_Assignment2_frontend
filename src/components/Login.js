@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import API from '../api/api';
 import '../style.css';
 
-function Login() {
+function Login({ setLogged }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -11,15 +11,12 @@ function Login() {
   const handleLogin = async () => {
     try {
       const res = await API.post('/user/login', { email, password });
+      const token = res.data.token;
+      if (!token) return alert("No token");
 
-      if (!res.data.token) {
-        alert("No token found");
-        return;
-      }
-
-      localStorage.setItem('token', res.data.token);
-
-      navigate('/employees', { replace: true });  
+      localStorage.setItem('token', token);
+      setLogged(true);
+      navigate('/employees');
     } catch (err) {
       alert(err.response?.data?.message || 'Login failed');
     }
@@ -43,7 +40,6 @@ function Login() {
           onChange={e => setPassword(e.target.value)}
         />
 
-        {}
         <button type="button" className="btn btn-add" onClick={handleLogin}>
           Login
         </button>
@@ -53,6 +49,7 @@ function Login() {
 }
 
 export default Login;
+
 
 
 

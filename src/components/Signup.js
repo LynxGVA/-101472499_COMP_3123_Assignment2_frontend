@@ -9,7 +9,7 @@ function Signup() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     try {
       await API.post('/user/signup', { username, email, password });
@@ -24,30 +24,33 @@ function Signup() {
       <div className="form-container">
         <h2>Signup</h2>
 
-        <form onSubmit={handleSubmit}>
-          <input 
-            placeholder="Username" 
-            value={username} 
-            onChange={e => setUsername(e.target.value)} 
+        <form onSubmit={submit}>
+          <input
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
           />
 
-          <input 
-            placeholder="Email" 
-            value={email} 
-            onChange={e => setEmail(e.target.value)} 
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
 
-          <input 
-            placeholder="Password" 
+          <input
+            placeholder="Password"
             type="password"
-            value={password} 
-            onChange={e => setPassword(e.target.value)} 
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
 
-          <button className="btn btn-add" type="submit">Signup</button>
-          <button 
-            className="btn btn-delete" 
-            type="button" 
+          <button className="btn btn-add" type="submit">
+            Signup
+          </button>
+
+          <button
+            className="btn btn-delete"
+            type="button"
             onClick={() => navigate('/login')}
           >
             Cancel
@@ -59,4 +62,5 @@ function Signup() {
 }
 
 export default Signup;
+
 

@@ -15,93 +15,47 @@ function EmployeeForm({ fetchEmployees }) {
 
   const [photo, setPhoto] = useState(null);
 
-  const handleSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+    const data = new FormData();
+    Object.keys(form).forEach(key => data.append(key, form[key]));
+    if (photo) data.append('photo', photo);
 
-    try {
-      const data = new FormData();
-      for (let key in form) data.append(key, form[key]);
-      if (photo) data.append('photo', photo);
+    await API.post('/emp/employees', data);
 
-      await API.post('/emp/employees', data);
+    setForm({
+      first_name: '',
+      last_name: '',
+      email: '',
+      position: '',
+      salary: '',
+      department: '',
+      date_of_joining: ''
+    });
 
-      setForm({
-        first_name: '',
-        last_name: '',
-        email: '',
-        position: '',
-        salary: '',
-        department: '',
-        date_of_joining: ''
-      });
-
-      setPhoto(null);
-
-      fetchEmployees();
-    } catch (err) {
-      alert(err.response?.data?.message || 'Error adding employee');
-    }
+    setPhoto(null);
+    fetchEmployees();
   };
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
+    <form className="form-container" onSubmit={submit}>
       <h3>Add Employee</h3>
 
-      <input
-        placeholder="First Name"
-        value={form.first_name}
-        onChange={e => setForm({ ...form, first_name: e.target.value })}
-      />
+      <input placeholder="First Name" value={form.first_name} onChange={e => setForm({ ...form, first_name: e.target.value })} />
+      <input placeholder="Last Name" value={form.last_name} onChange={e => setForm({ ...form, last_name: e.target.value })} />
+      <input placeholder="Email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+      <input placeholder="Position" value={form.position} onChange={e => setForm({ ...form, position: e.target.value })} />
+      <input placeholder="Department" value={form.department} onChange={e => setForm({ ...form, department: e.target.value })} />
+      <input placeholder="Salary" type="number" value={form.salary} onChange={e => setForm({ ...form, salary: e.target.value })} />
+      <input type="date" value={form.date_of_joining} onChange={e => setForm({ ...form, date_of_joining: e.target.value })} />
+      <input type="file" onChange={e => setPhoto(e.target.files[0])} />
 
-      <input
-        placeholder="Last Name"
-        value={form.last_name}
-        onChange={e => setForm({ ...form, last_name: e.target.value })}
-      />
-
-      <input
-        placeholder="Email"
-        value={form.email}
-        onChange={e => setForm({ ...form, email: e.target.value })}
-      />
-
-      <input
-        placeholder="Position"
-        value={form.position}
-        onChange={e => setForm({ ...form, position: e.target.value })}
-      />
-
-      <input
-        placeholder="Department"
-        value={form.department}
-        onChange={e => setForm({ ...form, department: e.target.value })}
-      />
-
-      <input
-        placeholder="Salary"
-        type="number"
-        value={form.salary}
-        onChange={e => setForm({ ...form, salary: e.target.value })}
-      />
-
-      <input
-        type="date"
-        value={form.date_of_joining}
-        onChange={e => setForm({ ...form, date_of_joining: e.target.value })}
-      />
-
-      <input
-        type="file"
-        onChange={e => setPhoto(e.target.files[0])}
-      />
-
-      <button className="btn btn-add" type="submit">
-        Add Employee
-      </button>
+      <button className="btn btn-add" type="submit">Add Employee</button>
     </form>
   );
 }
 
 export default EmployeeForm;
+
 
 

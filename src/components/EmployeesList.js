@@ -32,27 +32,16 @@ function EmployeesList() {
   return (
     <div className="container">
 
-      <button
-        className="btn btn-delete"
-        onClick={() => {
-          localStorage.removeItem('token');
-          delete API.defaults.headers.common["Authorization"];
-          navigate('/login', { replace: true });
-        }}
-      >
-        Logout
-      </button>
-
       <div>
-        <input 
+        <input
           placeholder="Department"
           value={search.department}
-          onChange={e => setSearch({...search, department: e.target.value})}
+          onChange={e => setSearch({ ...search, department: e.target.value })}
         />
-        <input 
+        <input
           placeholder="Position"
           value={search.position}
-          onChange={e => setSearch({...search, position: e.target.value})}
+          onChange={e => setSearch({ ...search, position: e.target.value })}
         />
         <button className="btn btn-view" onClick={fetchEmployees}>Search</button>
       </div>
@@ -84,13 +73,12 @@ function EmployeesList() {
               <td>{e.department}</td>
               <td>{e.salary}</td>
               <td>{new Date(e.date_of_joining).toLocaleDateString()}</td>
-
               <td>
                 {e.photo && (
                   <img
                     src={`https://101472499-comp-3123-assignment2-backend.onrender.com/uploads/${e.photo}`}
                     width="60"
-                    alt="employee"
+                    alt=""
                   />
                 )}
               </td>
@@ -127,6 +115,7 @@ function EmployeesList() {
 }
 
 export default EmployeesList;
+
 
 
 

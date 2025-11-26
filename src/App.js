@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -9,33 +10,27 @@ import NavigationBar from './components/NavigationBar';
 import './style.css';
 
 function App() {
-  const token = localStorage.getItem('token');
-  const isLoggedIn = !!token;
+  const [logged, setLogged] = useState(!!localStorage.getItem('token'));
+
+  useEffect(() => {
+    const onStorage = () => setLogged(!!localStorage.getItem('token'));
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
 
   return (
     <Router>
-      {isLoggedIn && <NavigationBar />}
+      {logged && <NavigationBar setLogged={setLogged} />}
 
       <Routes>
-        <Route path="/" element={ isLoggedIn ? <Navigate to="/employees" /> : <Login /> } />
-        <Route path="/login" element={ isLoggedIn ? <Navigate to="/employees" /> : <Login /> } />
-        <Route path="/signup" element={ isLoggedIn ? <Navigate to="/employees" /> : <Signup /> } />
+        <Route path="/" element={ logged ? <Navigate to="/employees" /> : <Login setLogged={setLogged} /> } />
+        <Route path="/login" element={ logged ? <Navigate to="/employees" /> : <Login setLogged={setLogged} /> } />
+        <Route path="/signup" element={ logged ? <Navigate to="/employees" /> : <Signup /> } />
 
-        <Route path="/employees" element={ 
-          isLoggedIn ? <EmployeesList /> : <Navigate to="/login" /> 
-        } />
-
-        <Route path="/employees/add" element={
-          isLoggedIn ? <AddEmployee /> : <Navigate to="/login" />
-        } />
-
-        <Route path="/employees/:id" element={
-          isLoggedIn ? <ViewEmployee /> : <Navigate to="/login" />
-        } />
-
-        <Route path="/employees/:id/update" element={
-          isLoggedIn ? <UpdateEmployee /> : <Navigate to="/login" />
-        } />
+        <Route path="/employees" element={ logged ? <EmployeesList /> : <Navigate to="/login" /> } />
+        <Route path="/employees/add" element={ logged ? <AddEmployee /> : <Navigate to="/login" /> } />
+        <Route path="/employees/:id" element={ logged ? <ViewEmployee /> : <Navigate to="/login" /> } />
+        <Route path="/employees/:id/update" element={ logged ? <UpdateEmployee /> : <Navigate to="/login" /> } />
       </Routes>
     </Router>
   );

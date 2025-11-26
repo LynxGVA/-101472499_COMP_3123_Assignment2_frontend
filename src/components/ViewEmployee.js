@@ -26,10 +26,10 @@ function ViewEmployee() {
         <p><b>Department:</b> {emp.department}</p>
 
         {emp.photo && (
-          <img 
+          <img
             src={`https://101472499-comp-3123-assignment2-backend.onrender.com/uploads/${emp.photo}`}
             width="120"
-            alt="profile"
+            alt=""
           />
         )}
 
@@ -41,4 +41,5 @@ function ViewEmployee() {
 }
 
 export default ViewEmployee;
+
 
