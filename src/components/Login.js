@@ -4,53 +4,55 @@ import API from '../api/api';
 import '../style.css';
 
 function Login() {
-  const [input, setInput] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleLogin = async () => {
     try {
-      const res = await API.post('/user/login', { email: input, username: input, password });
+      const res = await API.post('/user/login', { email, password });
 
       if (!res.data.token) {
-        alert("Login error: No token in response");
+        alert("No token found");
         return;
       }
 
       localStorage.setItem('token', res.data.token);
-      navigate('/employees');
+
+      navigate('/employees', { replace: true });  
     } catch (err) {
-      console.log(err);
       alert(err.response?.data?.message || 'Login failed');
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="container">
+      <div className="form-container">
+        <h2>Login</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input 
-          placeholder="Email or Username" 
-          value={input} 
-          onChange={e => setInput(e.target.value)} 
+        <input
+          placeholder="Email or Username"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
         />
 
-        <input 
-          placeholder="Password" 
+        <input
+          placeholder="Password"
           type="password"
-          value={password} 
-          onChange={e => setPassword(e.target.value)} 
+          value={password}
+          onChange={e => setPassword(e.target.value)}
         />
 
-        <button type="submit">Login</button>
-      </form>
+        {}
+        <button type="button" className="btn btn-add" onClick={handleLogin}>
+          Login
+        </button>
+      </div>
     </div>
   );
 }
 
 export default Login;
+
 
 

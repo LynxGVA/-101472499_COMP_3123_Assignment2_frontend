@@ -31,9 +31,14 @@ function EmployeesList() {
 
   return (
     <div className="container">
+
       <button
         className="btn btn-delete"
-        onClick={() => { localStorage.removeItem('token'); navigate('/login'); }}
+        onClick={() => {
+          localStorage.removeItem('token');
+          delete API.defaults.headers.common["Authorization"];
+          navigate('/login', { replace: true });
+        }}
       >
         Logout
       </button>
@@ -85,7 +90,7 @@ function EmployeesList() {
                   <img
                     src={`https://101472499-comp-3123-assignment2-backend.onrender.com/uploads/${e.photo}`}
                     width="60"
-                    alt=""
+                    alt="employee"
                   />
                 )}
               </td>
@@ -122,8 +127,6 @@ function EmployeesList() {
 }
 
 export default EmployeesList;
-
-
 
 
 
